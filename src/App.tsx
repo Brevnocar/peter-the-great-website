@@ -587,7 +587,7 @@ const Hero = () => {
 
 const Timeline = () => {
   return (
-    <section id="timeline" className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-8 section-bg-alt overflow-hidden">
+    <section id="timeline" className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-8 section-bg-alt">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -606,49 +606,47 @@ const Timeline = () => {
         </motion.div>
         
         <div className="relative">
-          {/* Vertical line: left on mobile (16px), center on desktop */}
+          {/* Center line */}
           <motion.div
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 1.5, ease: 'easeOut', delay: 0.3 }}
-            className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 lg:-translate-x-1/2 timeline-connector"
+            className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 timeline-connector"
             style={{ transformOrigin: 'top center' }}
           />
           
-          <div className="space-y-6 lg:space-y-12">
+          <div className="space-y-12">
             {timelineEvents.map((event, index) => {
               const isEven = index % 2 === 0
               return (
                 <motion.div
                   key={event.year}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.6 }}
-                  className="relative lg:flex lg:items-start"
+                  className={`relative flex items-start ${isEven ? 'flex-row' : 'flex-row-reverse'} lg:gap-8`}
                 >
-                  {/* Mobile: single column, line on left, card to the right */}
-                  {/* Desktop: alternating - even on left, odd on right */}
-                  <div className={`relative w-full lg:w-1/2 ${isEven ? 'lg:pr-8 lg:pl-0' : 'lg:pl-8 lg:pr-0'}`}>
-                    {/* Marker on the line */}
-                    <div className="absolute top-4 left-4 lg:left-1/2 lg:-translate-x-1/2 w-4 h-4 rounded-full bg-slate-950 border-4 border-silver-500 z-10" />
-                    {/* Card */}
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      className={`glass-card p-6 rounded-2xl border shadow-xl ${isEven ? 'lg:border-r-4 lg:border-silver-500/50 lg:ml-4' : 'lg:border-l-4 lg:border-silver-500/50 lg:mr-4'} lg:w-[calc(50%-2rem)]`}
-                      style={{ marginLeft: '1rem', marginRight: '1rem', maxWidth: 'calc(100% - 2rem)' }}
-                    >
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-silver-600 to-silver-800 flex items-center justify-center">
-                          <event.icon className="w-5 h-5 text-silver-100" />
+                  <div className={`w-1/2 pr-8 ${!isEven ? 'text-right pl-8' : ''}`}>
+                    <div className={`relative ${isEven ? '' : ''}`}>
+                      <div className="absolute top-4 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-950 border-4 border-silver-500 z-10" />
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        className={`glass-card p-6 rounded-2xl border ${isEven ? 'border-r-4 border-silver-500/50' : 'border-l-4 border-silver-500/50'} shadow-xl`}
+                      >
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-silver-600 to-silver-800 flex items-center justify-center">
+                            <event.icon className="w-5 h-5 text-silver-100" />
+                          </div>
+                          <span className="text-2xl font-bold font-serif text-silver-200">{event.year}</span>
                         </div>
-                        <span className="text-2xl font-bold font-serif text-silver-200">{event.year}</span>
-                      </div>
-                      <h3 className="text-xl font-bold text-silver-100 mb-2">{event.title}</h3>
-                      <p className="text-silver-400 leading-relaxed">{event.description}</p>
-                    </motion.div>
+                        <h3 className="text-xl font-bold text-silver-100 mb-2">{event.title}</h3>
+                        <p className="text-silver-400 leading-relaxed">{event.description}</p>
+                      </motion.div>
+                    </div>
                   </div>
-                  {/* Spacer for alternating layout on desktop */}
-                  <div className="lg:w-1/2 hidden" />
+                  <div className="w-1/2 flex justify-center lg:hidden">
+                    {/* Mobile spacer - hidden on desktop */}
+                  </div>
                 </motion.div>
               )
             })}
@@ -660,8 +658,6 @@ const Timeline = () => {
 }
   
   const ContentSection = ({ section }: { section: ContentSectionData }) => {
-  
-  // Sections with cards (reforms, culture)
   if (section.items) {
     return (
       <section 
