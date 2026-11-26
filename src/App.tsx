@@ -90,7 +90,7 @@ const HistoricalImage = ({
   return (
     <div className={`historical-frame relative overflow-hidden ${className}`} style={containerStyle}>
       {background && fit === 'contain' && (
-        <div className="absolute inset-0 bg-slate-950" />
+        <div className="absolute inset-0 bg-slate-950 pointer-events-none" />
       )}
       <img
         src={imageSrc}
@@ -600,45 +600,45 @@ const Timeline = () => {
         </motion.div>
         
         <div className="relative">
-          {/* Center line */}
+          {/* Center line on desktop, left line on mobile */}
           <motion.div
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 1.5, ease: 'easeOut', delay: 0.3 }}
-            className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 timeline-connector"
+            className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 lg:-translate-x-1/2 timeline-connector"
             style={{ transformOrigin: 'top center' }}
           />
           
-          <div className="space-y-12">
+          <div className="space-y-8 lg:space-y-12">
             {timelineEvents.map((event, index) => {
               const isEven = index % 2 === 0
               return (
                 <motion.div
                   key={event.year}
-                  initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.6 }}
-                  className={`relative flex items-start ${isEven ? 'flex-row' : 'flex-row-reverse'} gap-8`}
+                  className="relative lg:flex lg:items-start"
                 >
-                  <div className={`w-1/2 pr-8 ${!isEven ? 'text-right pl-8' : ''}`}>
-                    <div className={`relative ${isEven ? '' : ''}`}>
-                      <div className="absolute top-4 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-950 border-4 border-silver-500 z-10" />
-                      <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        className={`glass-card p-6 rounded-2xl border ${isEven ? 'border-r-4 border-silver-500/50' : 'border-l-4 border-silver-500/50'} shadow-xl`}
-                      >
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-silver-600 to-silver-800 flex items-center justify-center">
-                            <event.icon className="w-5 h-5 text-silver-100" />
-                          </div>
-                          <span className="text-2xl font-bold font-serif text-silver-200">{event.year}</span>
+                  {/* Mobile: single column, line on left, card on right */}
+                  {/* Desktop: alternating left/right */}
+                  <div className="relative lg:w-1/2 lg:pr-8 lg:pl-0">
+                    <div className="absolute top-4 left-4 lg:left-1/2 lg:-translate-x-1/2 w-4 h-4 rounded-full bg-slate-950 border-4 border-silver-500 z-10" />
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className={`glass-card p-6 rounded-2xl border ${isEven ? 'lg:border-r-4 lg:border-silver-500/50' : 'lg:border-l-4 lg:border-silver-500/50'} shadow-xl lg:ml-4 lg:mr-0`}
+                    >
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-silver-600 to-silver-800 flex items-center justify-center">
+                          <event.icon className="w-5 h-5 text-silver-100" />
                         </div>
-                        <h3 className="text-xl font-bold text-silver-100 mb-2">{event.title}</h3>
-                        <p className="text-silver-400 leading-relaxed">{event.description}</p>
-                      </motion.div>
-                    </div>
+                        <span className="text-2xl font-bold font-serif text-silver-200">{event.year}</span>
+                      </div>
+                      <h3 className="text-xl font-bold text-silver-100 mb-2">{event.title}</h3>
+                      <p className="text-silver-400 leading-relaxed">{event.description}</p>
+                    </motion.div>
                   </div>
-                  <div className="w-1/2 flex justify-center">
+                  <div className="w-1/2 lg:flex lg:justify-center lg:hidden">
                     {/* Removed timeline card images per design requirements */}
                   </div>
                 </motion.div>
