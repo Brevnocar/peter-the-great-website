@@ -618,14 +618,14 @@ const Timeline = () => {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.6 }}
-                  className="relative"
+                  className="relative lg:flex lg:items-start"
                 >
-                  {/* Mobile: single column, line on left, card to the right of line */}
-                  {/* Desktop: alternating left/right with center line */}
-                  <div className="relative lg:w-1/2 lg:pl-0 lg:pr-8">
+                  {/* Mobile: single column, line on left, card to the right */}
+                  {/* Desktop: alternating - even on left, odd on right */}
+                  <div className={`relative w-full lg:w-1/2 ${isEven ? 'lg:pr-8 lg:pl-0' : 'lg:pl-8 lg:pr-0'}`}>
                     {/* Marker on the line */}
                     <div className="absolute top-4 left-4 lg:left-1/2 lg:-translate-x-1/2 w-4 h-4 rounded-full bg-slate-950 border-4 border-silver-500 z-10" />
-                    {/* Card: on mobile starts after line (left-12), on desktop alternates */}
+                    {/* Card */}
                     <motion.div
                       whileHover={{ scale: 1.02 }}
                       className={`glass-card p-6 rounded-2xl border shadow-xl ${isEven ? 'lg:border-r-4 lg:border-silver-500/50 lg:ml-4' : 'lg:border-l-4 lg:border-silver-500/50 lg:mr-4'} lg:w-[calc(50%-2rem)]`}
@@ -641,8 +641,8 @@ const Timeline = () => {
                       <p className="text-silver-400 leading-relaxed">{event.description}</p>
                     </motion.div>
                   </div>
-                  {/* Empty spacer for desktop alternating layout - hidden on mobile */}
-                  <div className="lg:w-1/2 lg:flex lg:justify-center hidden" />
+                  {/* Spacer for alternating layout on desktop */}
+                  <div className="lg:w-1/2 hidden" />
                 </motion.div>
               )
             })}
