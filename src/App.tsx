@@ -651,7 +651,7 @@ const Timeline = () => {
         </div>
         
         {/* MOBILE: single column, line on left, cards on right */}
-        <div className="lg:hidden">
+        <div className="lg:hidden overflow-x-hidden">
           <div className="relative">
             {/* Vertical left line */}
             <motion.div
