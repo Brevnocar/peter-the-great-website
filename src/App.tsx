@@ -581,7 +581,7 @@ const Hero = () => {
 
 const Timeline = () => {
   return (
-    <section id="timeline" className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-8 section-bg-alt">
+    <section id="timeline" className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-8 section-bg-alt overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -600,7 +600,7 @@ const Timeline = () => {
         </motion.div>
         
         <div className="relative">
-          {/* Center line on desktop, left line on mobile */}
+          {/* Vertical line: left on mobile (16px), center on desktop */}
           <motion.div
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
@@ -609,7 +609,7 @@ const Timeline = () => {
             style={{ transformOrigin: 'top center' }}
           />
           
-          <div className="space-y-8 lg:space-y-12">
+          <div className="space-y-6 lg:space-y-12">
             {timelineEvents.map((event, index) => {
               const isEven = index % 2 === 0
               return (
@@ -618,15 +618,18 @@ const Timeline = () => {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.6 }}
-                  className="relative lg:flex lg:items-start"
+                  className="relative"
                 >
-                  {/* Mobile: single column, line on left, card on right */}
-                  {/* Desktop: alternating left/right */}
-                  <div className="relative lg:w-1/2 lg:pr-8 lg:pl-0">
+                  {/* Mobile: single column, line on left, card to the right of line */}
+                  {/* Desktop: alternating left/right with center line */}
+                  <div className="relative lg:w-1/2 lg:pl-0 lg:pr-8">
+                    {/* Marker on the line */}
                     <div className="absolute top-4 left-4 lg:left-1/2 lg:-translate-x-1/2 w-4 h-4 rounded-full bg-slate-950 border-4 border-silver-500 z-10" />
+                    {/* Card: on mobile starts after line (left-12), on desktop alternates */}
                     <motion.div
                       whileHover={{ scale: 1.02 }}
-                      className={`glass-card p-6 rounded-2xl border ${isEven ? 'lg:border-r-4 lg:border-silver-500/50' : 'lg:border-l-4 lg:border-silver-500/50'} shadow-xl lg:ml-4 lg:mr-0`}
+                      className={`glass-card p-6 rounded-2xl border shadow-xl ${isEven ? 'lg:border-r-4 lg:border-silver-500/50 lg:ml-4' : 'lg:border-l-4 lg:border-silver-500/50 lg:mr-4'} lg:w-[calc(50%-2rem)]`}
+                      style={{ marginLeft: '1rem', marginRight: '1rem', maxWidth: 'calc(100% - 2rem)' }}
                     >
                       <div className="flex items-center gap-3 mb-3">
                         <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-silver-600 to-silver-800 flex items-center justify-center">
@@ -638,9 +641,8 @@ const Timeline = () => {
                       <p className="text-silver-400 leading-relaxed">{event.description}</p>
                     </motion.div>
                   </div>
-                  <div className="w-1/2 lg:flex lg:justify-center lg:hidden">
-                    {/* Removed timeline card images per design requirements */}
-                  </div>
+                  {/* Empty spacer for desktop alternating layout - hidden on mobile */}
+                  <div className="lg:w-1/2 lg:flex lg:justify-center hidden" />
                 </motion.div>
               )
             })}
