@@ -174,6 +174,7 @@ interface ContentSectionData {
   items?: ContentSectionItem[]
   battles?: ContentSectionBattle[]
   heroImage?: string
+  heroImageAspectRatio?: string
 }
 
 // Content sections data with images
@@ -197,6 +198,7 @@ const contentSections: ContentSectionData[] = [
     subtitle: '1689–1697',
     icon: Compass,
     heroImage: '/images/peter-portrait-luciani.jpg',
+    heroImageAspectRatio: '3/4',
     content: [
       'С 1689 года Пётр начал самостоятельное правление. Особое внимание уделял военным играм, из которых выросли потешные полки — основа будущей гвардии.',
       'Знакомство с иностранцами в Немецкой слободе и посещение европейских поселений в Москве сформировали стремление к современзации.',
@@ -210,6 +212,7 @@ const contentSections: ContentSectionData[] = [
     subtitle: 'Путь к преобразованиям',
     icon: Ship,
     heroImage: '/images/peter-holland.jpg',
+    heroImageAspectRatio: '4/3',
     content: [
       'Официальная цель — укрепление союза против Османской империи, но главная задача Петра — изучение европейского опыта.',
       'Пётр посещал верфи в Голландии и Англии, работал плотником, изучал кораблестроение, артиллерию, медицину и анатомию.',
@@ -223,6 +226,7 @@ const contentSections: ContentSectionData[] = [
     subtitle: '1708–1722',
     icon: Building2,
     heroImage: '/images/peter-portrait-benner.jpg',
+    heroImageAspectRatio: '191/256',
     items: [
       { title: 'Губернская реформа (1708)', desc: 'Страна разделена на 8 (позже 50) губерний для лучшего управления огромными территориями.', image: undefined },
       { title: 'Сенат (1711)', desc: 'Высший орган власти, управлявший страной в отсутствие царя и контролирующий работу учреждений.', image: undefined },
@@ -258,6 +262,7 @@ const contentSections: ContentSectionData[] = [
     subtitle: '1703 — новая столица',
     icon: MapPin,
     heroImage: '/images/peter-stpetersburg-map-box.jpg',
+    heroImageAspectRatio: '4/3',
     content: [
       '16 (27) мая 1703 года на Заячьем острове в устье Невы заложена Петропавловская крепость — начало города.',
       'Стратегическое значение: укрепление на Балтике, база для флота, порт для торговли с Европой.',
@@ -301,6 +306,7 @@ const contentSections: ContentSectionData[] = [
     subtitle: 'Традиции и новации',
     icon: Users,
     heroImage: '/images/peter-assembly.jpg',
+    heroImageAspectRatio: '4/3',
     content: [
       'Пётр вводил европейские манеры: бритье бород, западная одежда, табак, кофе, карты, танцы.',
       'Ассамблеи — обязательные светные вечера для дворян. Женщины выходили в свет, что было необычно для московской традиции.',
@@ -729,7 +735,7 @@ const ContentSection = ({ section }: { section: ContentSectionData }) => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="mb-12 max-w-4xl mx-auto"
+              className="mb-12 max-w-2xl mx-auto"
             >
               <HistoricalImage
                 src={section.heroImage}
@@ -738,7 +744,7 @@ const ContentSection = ({ section }: { section: ContentSectionData }) => {
                 caption={`Историческое изображение к разделу «${section.title}»`}
                 fit="contain"
                 position="center"
-                aspectRatio="3/4"
+                aspectRatio={section.heroImageAspectRatio || '3/4'}
               />
             </motion.div>
           )}
