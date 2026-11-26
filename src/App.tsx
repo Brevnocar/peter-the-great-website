@@ -1102,7 +1102,7 @@ const Quiz = () => {
                 Назад
               </motion.button>
 
-              <div className="flex items-center gap-2 text-sm text-silver-500">
+              <div className="flex items-center gap-2 text-sm text-silver-500 overflow-x-auto scrollbar-hide pb-2">
                 {questions.map((_, i) => (
                   <motion.div
                     key={i}
