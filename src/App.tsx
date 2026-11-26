@@ -473,7 +473,7 @@ const Hero = () => {
               loading="eager"
               fit="contain"
               position="center"
-              aspectRatio="3/4"
+              aspectRatio="7/8"
               background={false}
               caption="Пётр Великий с чернокожим пажом · Густав фон Мардефельд, ок. 1720 · Victoria and Albert Museum (V&A), Лондон · Инв. 605-1882"
             />
@@ -691,7 +691,7 @@ const ContentSection = ({ section }: { section: ContentSectionData }) => {
                 caption={`Историческое изображение к разделу «${section.title}»`}
                 fit="contain"
                 position="center"
-                aspectRatio="16/9"
+                aspectRatio="3/4"
               />
             </motion.div>
           )}
