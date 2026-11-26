@@ -55,6 +55,10 @@ const HistoricalImage = ({
   const [hasError, setHasError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   
+  // Prepend base URL for GitHub Pages deployment
+  const baseUrl = import.meta.env.BASE_URL || '/'
+  const imageSrc = src.startsWith('/') ? `${baseUrl}${src.slice(1)}` : src
+  
   const containerStyle: React.CSSProperties = {
     width,
     height,
@@ -89,7 +93,7 @@ const HistoricalImage = ({
         <div className="absolute inset-0 bg-slate-950" />
       )}
       <img
-        src={src}
+        src={imageSrc}
         alt={alt}
         loading={loading}
         crossOrigin="anonymous"
